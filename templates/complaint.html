@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Submit Complaint - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="info-card">
+            <span class="eyebrow">Complaint Management System</span>
+            <h2>Submit Complaint</h2>
+            <form class="portal-form" method="post">
+                <div class="form-group">
+                    <label>Complaint Title</label>
+                    <input type="text" name="complaint_title" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" required>
+                        <option>Subsidy</option>
+                        <option>Insurance</option>
+                        <option>Loan</option>
+                        <option>Verification</option>
+                        <option>Technical Support</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Complaint Description</label>
+                    <textarea name="complaint_description" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Complaint</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

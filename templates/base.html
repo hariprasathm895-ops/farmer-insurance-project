@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AgriSmart AI{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="site-shell">
+        <header class="topbar">
+            <div class="topbar-strip">
+                <div class="container topbar-strip-inner">
+                    <span data-en="Government of India Inspired Smart Agriculture Service Portal" data-ta="இந்தியா அரசு முறைப்படியான ஸ்மார்ட் வேளாண்மை சேவை தளம்">Government of India Inspired Smart Agriculture Service Portal</span>
+                    <div class="topbar-actions">
+                        <button id="langToggle" class="lang-toggle" type="button">
+                            <i class="bi bi-translate"></i>
+                            <span data-en="Tamil / English" data-ta="தமிழ் / ஆங்கிலம்">Tamil / English</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar">
+                <div class="container navbar-inner">
+                    <a href="{{ url_for('home') }}" class="brand">
+                        <div class="brand-mark">AI</div>
+                        <div>
+                            <h1>AgriSmart AI</h1>
+                            <p data-en="Smart Agriculture Governance Portal" data-ta="ஸ்மார்ட் வேளாண்மை நிர்வாக தளம்">Smart Agriculture Governance Portal</p>
+                        </div>
+                    </a>
+                    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="nav-links" id="navLinks">
+                        <a href="{{ url_for('home') }}" data-en="Home" data-ta="முகப்பு">Home</a>
+                        <a href="{{ url_for('register_farmer') }}" data-en="Farmer Registration" data-ta="விவசாயி பதிவு">Farmer Registration</a>
+                        <a href="{{ url_for('track_status') }}" data-en="Track Status" data-ta="நிலை கண்காணிப்பு">Track Status</a>
+                        <a href="{{ url_for('admin_login') }}" data-en="Admin Login" data-ta="நிர்வாகி உள்நுழைவு">Admin Login</a>
+                        <a href="{{ url_for('chatbot_page') }}" data-en="AI Chatbot" data-ta="ஏஐ உதவியாளர்">AI Chatbot</a>
+                        <a href="{{ url_for('privacy_policy') }}" data-en="Privacy Policy" data-ta="தனியுரிமைக் கொள்கை">Privacy Policy</a>
+                        <a href="{{ url_for('contact') }}" data-en="Contact Us" data-ta="தொடர்பு">Contact Us</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="page-content">
+            <div class="container flash-stack">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">
+                                <i class="bi bi-info-circle-fill"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+            <div class="container footer-grid">
+                <div>
+                    <h3>AgriSmart AI</h3>
+                    <p data-en="AI Powered Digital Governance System for Smart Agriculture Administration" data-ta="ஸ்மார்ட் வேளாண்மை நிர்வாகத்திற்கான ஏஐ இயக்கப்படும் டிஜிட்டல் ஆட்சி அமைப்பு">AI Powered Digital Governance System for Smart Agriculture Administration</p>
+                </div>
+                <div>
+                    <h4 data-en="Services" data-ta="சேவைகள்">Services</h4>
+                    <a href="{{ url_for('register_farmer') }}">Farmer Registration</a>
+                    <a href="{{ url_for('track_status') }}">Track Applications</a>
+                    <a href="{{ url_for('chatbot_page') }}">AI Advisory</a>
+                </div>
+                <div>
+                    <h4 data-en="Support" data-ta="உதவி">Support</h4>
+                    <p>Email: hariprasathm895@gmail.com</p>
+                    <p>Helpline: 1800-425-2026</p>
+                    <p data-en="Tamil Nadu Agriculture Facilitation Desk" data-ta="தமிழ்நாடு வேளாண்மை உதவி மையம்">Tamil Nadu Agriculture Facilitation Desk</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <span data-en="© 2026 AgriSmart AI. Built for transparent farmer welfare delivery." data-ta="© 2026 AgriSmart AI. வெளிப்படையான விவசாயி நல சேவைக்காக உருவாக்கப்பட்டது.">© 2026 AgriSmart AI. Built for transparent farmer welfare delivery.</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

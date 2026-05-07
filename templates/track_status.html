@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Track Status - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section page-hero compact-hero">
+    <div class="container two-column">
+        <div class="info-card reveal">
+            <span class="eyebrow">Application Tracking</span>
+            <h2 data-en="Track Application Status" data-ta="விண்ணப்ப நிலையை கண்காணிக்க">Track Application Status</h2>
+            <p data-en="Enter your phone number or Aadhaar number to view registration, verification, subsidy, insurance, and loan progress." data-ta="பதிவு, சரிபார்ப்பு, மானியம், காப்பீடு மற்றும் கடன் நிலையை பார்க்க தொலைபேசி எண் அல்லது ஆதார் எண்ணை உள்ளிடவும்.">Enter your phone number or Aadhaar number to view registration, verification, subsidy, insurance, and loan progress.</p>
+            <form class="portal-form compact-form" method="post">
+                <div class="form-group">
+                    <label>Phone Number or Aadhaar Number</label>
+                    <input type="text" name="identifier" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Track Status</button>
+            </form>
+        </div>
+        <div class="info-card reveal">
+            <h3>Tracking Guidance</h3>
+            <ul class="clean-list">
+                <li>Use the same mobile number given during registration.</li>
+                <li>Approved farmers can directly open their dashboard.</li>
+                <li>Patta verification and Aadhaar OCR results are shown here.</li>
+            </ul>
+        </div>
+    </div>
+
+    {% if farmer %}
+    <div class="container">
+        <div class="status-card reveal">
+            <div class="status-card-header">
+                <div>
+                    <h3>{{ farmer.name }}</h3>
+                    <p>Farmer ID: <strong>{{ farmer.farmer_id }}</strong></p>
+                </div>
+                <span class="badge badge-{{ farmer.application_status|lower }}">{{ farmer.application_status }}</span>
+            </div>
+            <div class="status-grid">
+                <div class="metric-box">
+                    <span>Verification Status</span>
+                    <strong>{{ farmer.verification_status }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Patta Verification</span>
+                    <strong>{{ farmer.patta_verification }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Land Ownership</span>
+                    <strong>{{ farmer.land_ownership_status }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Crop Type</span>
+                    <strong>{{ farmer.crop_type }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Subsidy Status</span>
+                    <strong>{{ service_statuses.subsidy.status if service_statuses.subsidy else 'Not Applied' }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Insurance Status</span>
+                    <strong>{{ service_statuses.insurance.status if service_statuses.insurance else 'Not Applied' }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Loan Status</span>
+                    <strong>{{ service_statuses.loan.status if service_statuses.loan else 'Not Applied' }}</strong>
+                </div>
+                <div class="metric-box">
+                    <span>Application Status</span>
+                    <strong>{{ farmer.application_status }}</strong>
+                </div>
+            </div>
+            {% if farmer.application_status == "Approved" %}
+            <form method="post" action="{{ url_for('farmer_access') }}" class="inline-form">
+                <input type="hidden" name="identifier" value="{{ farmer.phone }}">
+                <button type="submit" class="btn btn-primary">Open Farmer Dashboard</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

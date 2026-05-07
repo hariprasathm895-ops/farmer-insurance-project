@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Contact Us - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container two-column">
+        <div class="info-card">
+            <span class="eyebrow">Support Desk</span>
+            <h2>Contact the Agriculture Department</h2>
+            <div class="detail-list">
+                <p><strong>Support Email:</strong> hariprasathm895@gmail.com</p>
+                <p><strong>Helpline Number:</strong> 1800-425-2026</p>
+                <p><strong>Office Address:</strong> Directorate of Agriculture and Farmers Welfare, Chennai, Tamil Nadu, India</p>
+                <p><strong>Working Hours:</strong> Monday to Saturday, 9:30 AM to 6:00 PM</p>
+            </div>
+        </div>
+        <div class="info-card">
+            <h3>Contact Form</h3>
+            <form class="portal-form" method="post">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

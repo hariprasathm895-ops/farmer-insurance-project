@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Farmer Dashboard - AgriSmart AI{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+{% block content %}
+<section class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-card">
+            <h3>{{ farmer.name }}</h3>
+            <p>{{ farmer.farmer_id }}</p>
+            <a href="{{ url_for('farmer_dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('apply_subsidy') }}">Apply Subsidy</a>
+            <a href="{{ url_for('apply_insurance') }}">Apply Insurance</a>
+            <a href="{{ url_for('apply_loan') }}">Apply Loan</a>
+            <a href="{{ url_for('submit_complaint') }}">Submit Complaint</a>
+            <a href="{{ url_for('application_history') }}">Application History</a>
+            <a href="{{ url_for('chatbot_page') }}">AI Chatbot</a>
+            <a href="{{ url_for('farmer_logout') }}">Logout</a>
+        </div>
+    </aside>
+    <div class="dashboard-main">
+        <section class="section">
+            <div class="container">
+                <div class="page-header-card">
+                    <div>
+                        <span class="eyebrow">Approved Farmer Portal</span>
+                        <h2>Welcome, {{ farmer.name }}</h2>
+                        <p>{{ farmer.district }}, {{ farmer.state }} | Crop: {{ farmer.crop_type }} | Category: {{ farmer.farmer_category }}</p>
+                    </div>
+                    <img class="qr-preview" src="{{ url_for('static', filename=farmer.qr_code_path) }}" alt="Farmer QR ID">
+                </div>
+
+                <div class="dashboard-card-grid">
+                    <div class="dashboard-stat-card"><span>Total Applications</span><strong>{{ counts.total_applications }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Subsidy Status</span><strong>{{ counts.subsidy_status }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Insurance Status</span><strong>{{ counts.insurance_status }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Loan Status</span><strong>{{ counts.loan_status }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Complaints</span><strong>{{ counts.complaints }}</strong></div>
+                </div>
+
+                <div class="three-column">
+                    <div class="info-card">
+                        <h3>Aadhaar Verification</h3>
+                        <span class="badge badge-neutral">{{ farmer.verification_status }}</span>
+                    </div>
+                    <div class="info-card">
+                        <h3>Patta Verification</h3>
+                        <span class="badge badge-neutral">{{ farmer.patta_verification }}</span>
+                    </div>
+                    <div class="info-card">
+                        <h3>Land Ownership Status</h3>
+                        <span class="badge badge-neutral">{{ farmer.land_ownership_status }}</span>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-card">
+                        <h3>My Service Analytics</h3>
+                        <canvas id="farmerChart"></canvas>
+                    </div>
+                    <div class="info-card">
+                        <h3>AI Recommendations</h3>
+                        <div class="advisory-card">
+                            <p><strong>Crop Recommendation:</strong> {{ crop_recommendation }}</p>
+                            <p><strong>Weather Snapshot:</strong> {{ weather.summary }}</p>
+                            <p><strong>Temperature:</strong> {{ weather.temperature }}</p>
+                            <p><strong>Wind:</strong> {{ weather.wind }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-grid">
+                    <a class="quick-action-card" href="{{ url_for('apply_subsidy') }}">
+                        <i class="bi bi-award"></i>
+                        <span>Apply Subsidy</span>
+                    </a>
+                    <a class="quick-action-card" href="{{ url_for('apply_insurance') }}">
+                        <i class="bi bi-shield-plus"></i>
+                        <span>Apply Insurance</span>
+                    </a>
+                    <a class="quick-action-card" href="{{ url_for('apply_loan') }}">
+                        <i class="bi bi-bank"></i>
+                        <span>Apply Loan</span>
+                    </a>
+                    <a class="quick-action-card" href="{{ url_for('submit_complaint') }}">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span>Submit Complaint</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    const farmerAnalytics = {{ analytics|tojson }};
+    new Chart(document.getElementById('farmerChart'), {
+        type: 'polarArea',
+        data: {
+            labels: farmerAnalytics.labels,
+            datasets: [{
+                data: farmerAnalytics.values,
+                backgroundColor: ['#0d6efd', '#198754', '#f1b73c', '#dc3545']
+            }]
+        }
+    });
+</script>
+{% endblock %}

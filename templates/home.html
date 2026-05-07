@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}AgriSmart AI - Home{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="hero-backdrop">
+        <img src="{{ url_for('static', filename='img/agri-hero.svg') }}" alt="Agriculture landscape illustration">
+    </div>
+    <div class="container hero-grid">
+        <div class="hero-copy reveal">
+            <span class="eyebrow" data-en="Digital Public Agriculture Infrastructure" data-ta="டிஜிட்டல் பொது வேளாண்மை அடிக்கட்டு">Digital Public Agriculture Infrastructure</span>
+            <h2 data-en="Smart Agriculture Digital Portal" data-ta="ஸ்மார்ட் வேளாண்மை டிஜிட்டல் தளம்">Smart Agriculture Digital Portal</h2>
+            <p data-en="A centralized AI-enabled service platform for farmer registration, subsidy distribution, crop insurance, agricultural loans, complaints, and transparent administration." data-ta="விவசாயி பதிவு, மானியம், பயிர் காப்பீடு, வேளாண் கடன், புகார் மேலாண்மை மற்றும் வெளிப்படையான நிர்வாகத்திற்கான மையப்படுத்தப்பட்ட ஏஐ சேவை தளம்.">A centralized AI-enabled service platform for farmer registration, subsidy distribution, crop insurance, agricultural loans, complaints, and transparent administration.</p>
+            <div class="hero-actions">
+                <a href="{{ url_for('register_farmer') }}" class="btn btn-primary" data-en="Register as Farmer" data-ta="விவசாயியாக பதிவு செய்க">Register as Farmer</a>
+                <a href="{{ url_for('track_status') }}" class="btn btn-secondary" data-en="Track Your Status" data-ta="உங்கள் நிலையை பார்க்க">Track Your Status</a>
+            </div>
+            <div class="hero-tags">
+                <span><i class="bi bi-shield-check"></i> OCR Verification</span>
+                <span><i class="bi bi-bar-chart-line"></i> Admin Analytics</span>
+                <span><i class="bi bi-robot"></i> AI Service Guidance</span>
+            </div>
+        </div>
+        <div class="hero-panel reveal reveal-delay">
+            <div class="info-card hero-info-card">
+                <h3 data-en="National Style Service Coverage" data-ta="தேசிய முறை சேவை வரம்பு">National Style Service Coverage</h3>
+                <div class="metric-grid">
+                    <div class="metric-box">
+                        <strong>{{ stats.farmers }}</strong>
+                        <span data-en="Farmer Profiles" data-ta="விவசாயி சுயவிவரங்கள்">Farmer Profiles</span>
+                    </div>
+                    <div class="metric-box">
+                        <strong>{{ stats.approved }}</strong>
+                        <span data-en="Approved Records" data-ta="அங்கீகரிக்கப்பட்ட பதிவுகள்">Approved Records</span>
+                    </div>
+                    <div class="metric-box">
+                        <strong>{{ stats.subsidies }}</strong>
+                        <span data-en="Subsidy Requests" data-ta="மானிய விண்ணப்பங்கள்">Subsidy Requests</span>
+                    </div>
+                    <div class="metric-box">
+                        <strong>{{ stats.loans }}</strong>
+                        <span data-en="Loan Cases" data-ta="கடன் வழக்குகள்">Loan Cases</span>
+                    </div>
+                </div>
+                <div class="status-ribbon">
+                    <i class="bi bi-patch-check-fill"></i>
+                    <span data-en="Inspired by PMFBY, PM-KISAN, e-Sevai and KCC models" data-ta="PMFBY, PM-KISAN, e-Sevai மற்றும் KCC மாதிரிகளில் இருந்து ஊக்கமளிக்கப்பட்டது">Inspired by PMFBY, PM-KISAN, e-Sevai and KCC models</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading reveal">
+            <span class="eyebrow" data-en="Core Services" data-ta="முக்கிய சேவைகள்">Core Services</span>
+            <h2 data-en="Integrated farmer welfare workflows in one portal" data-ta="ஒரே தளத்தில் ஒருங்கிணைந்த விவசாயி நல பணிச்சூழல்கள்">Integrated farmer welfare workflows in one portal</h2>
+        </div>
+        <div class="feature-grid">
+            <article class="feature-card reveal">
+                <i class="bi bi-person-vcard"></i>
+                <h3 data-en="Farmer Registration" data-ta="விவசாயி பதிவு">Farmer Registration</h3>
+                <p data-en="Register with Aadhaar, Patta, land photo, crop details, and bank details in one secure digital flow." data-ta="ஆதார், பட்டா, நிலப் புகைப்படம், பயிர் மற்றும் வங்கி விவரங்களுடன் பாதுகாப்பான ஒரே டிஜிட்டல் பதிவேற்றம்.">Register with Aadhaar, Patta, land photo, crop details, and bank details in one secure digital flow.</p>
+            </article>
+            <article class="feature-card reveal">
+                <i class="bi bi-search-heart"></i>
+                <h3 data-en="OCR Verification" data-ta="OCR சரிபார்ப்பு">OCR Verification</h3>
+                <p data-en="AI-assisted document checks compare Aadhaar and Patta ownership details to reduce manual errors." data-ta="கையேடு பிழைகளை குறைக்க ஆதார் மற்றும் பட்டா உரிமை விவரங்களை ஏஐ உதவியுடன் ஒப்பிடுகிறது.">AI-assisted document checks compare Aadhaar and Patta ownership details to reduce manual errors.</p>
+            </article>
+            <article class="feature-card reveal">
+                <i class="bi bi-cash-coin"></i>
+                <h3 data-en="Subsidy & Loan Intelligence" data-ta="மானியம் மற்றும் கடன் நுண்ணறிவு">Subsidy & Loan Intelligence</h3>
+                <p data-en="Rule-based recommendations suggest suitable schemes, loan products, interest, EMI, and risk posture." data-ta="தகுந்த திட்டங்கள், கடன் தயாரிப்புகள், வட்டி, EMI மற்றும் அபாய நிலையை விதிமுறை அடிப்படையில் பரிந்துரைக்கிறது.">Rule-based recommendations suggest suitable schemes, loan products, interest, EMI, and risk posture.</p>
+            </article>
+            <article class="feature-card reveal">
+                <i class="bi bi-graph-up-arrow"></i>
+                <h3 data-en="Admin Analytics" data-ta="நிர்வாக பகுப்பாய்வு">Admin Analytics</h3>
+                <p data-en="Modern dashboard cards and charts help departments monitor approvals, crop patterns, and complaints." data-ta="நவீன டாஷ்போர்டு அட்டைகள் மற்றும் விளக்கப்படங்கள் அங்கீகாரம், பயிர் நிலை மற்றும் புகார்களை கண்காணிக்க உதவுகின்றன.">Modern dashboard cards and charts help departments monitor approvals, crop patterns, and complaints.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container stats-grid">
+        <div class="stat-card reveal">
+            <span class="stat-number">24x7</span>
+            <span class="stat-label" data-en="Digital access" data-ta="டிஜிட்டல் அணுகல்">Digital access</span>
+        </div>
+        <div class="stat-card reveal">
+            <span class="stat-number">AI</span>
+            <span class="stat-label" data-en="Decision support" data-ta="முடிவு ஆதரவு">Decision support</span>
+        </div>
+        <div class="stat-card reveal">
+            <span class="stat-number">100%</span>
+            <span class="stat-label" data-en="Trackable workflow" data-ta="கண்காணிக்கக்கூடிய பணிச்சூழல்">Trackable workflow</span>
+        </div>
+        <div class="stat-card reveal">
+            <span class="stat-number">2 Lang</span>
+            <span class="stat-label" data-en="English & Tamil support" data-ta="ஆங்கிலம் மற்றும் தமிழ் ஆதரவு">English & Tamil support</span>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container two-column">
+        <div class="info-card reveal">
+            <span class="eyebrow" data-en="About the Portal" data-ta="தளத்தைப் பற்றி">About the Portal</span>
+            <h3 data-en="A professional agriculture administration experience" data-ta="தொழில்முறை வேளாண்மை நிர்வாக அனுபவம்">A professional agriculture administration experience</h3>
+            <p data-en="AgriSmart AI is designed as a centralized farmer welfare system inspired by Indian e-governance portals. It helps reduce paperwork, improve verification quality, and accelerate service delivery for subsidy, insurance, loan, and complaint workflows." data-ta="AgriSmart AI இந்திய மின் ஆட்சி தளங்களில் இருந்து ஊக்கமளிக்கப்பட்ட மையப்படுத்தப்பட்ட விவசாயி நல அமைப்பாக வடிவமைக்கப்பட்டுள்ளது. இது ஆவணப் பணிகளை குறைத்து, சரிபார்ப்பை மேம்படுத்தி, மானியம், காப்பீடு, கடன் மற்றும் புகார் சேவைகளை விரைவுபடுத்துகிறது.">AgriSmart AI is designed as a centralized farmer welfare system inspired by Indian e-governance portals. It helps reduce paperwork, improve verification quality, and accelerate service delivery for subsidy, insurance, loan, and complaint workflows.</p>
+        </div>
+        <div class="info-card reveal">
+            <span class="eyebrow" data-en="Scheme Highlights" data-ta="திட்ட சிறப்பம்சங்கள்">Scheme Highlights</span>
+            <ul class="clean-list">
+                <li>PM-KISAN income support recommendation</li>
+                <li>PMFBY-aligned crop insurance suggestions</li>
+                <li>Kisan Credit Card style loan workflow</li>
+                <li>Tamil Nadu e-Sevai inspired citizen service interface</li>
+                <li>Complaint tracking with admin response management</li>
+                <li>Farmer dashboard with QR identity and weather insight</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container two-column">
+        <div class="info-card reveal">
+            <span class="eyebrow">Bonus Features</span>
+            <h3>Operational Enhancements</h3>
+            <ul class="clean-list">
+                <li>Loan receipt PDF generation for farmer download</li>
+                <li>Farmer QR identity code for quick dashboard verification</li>
+                <li>Weather API integration with district-level live snapshot</li>
+                <li>AI-based crop recommendation summary for approved farmers</li>
+                <li>SMS notification logging stub for future gateway integration</li>
+                <li>EMI calculator and repayment tracker in the loan module</li>
+            </ul>
+        </div>
+        <div class="info-card reveal">
+            <span class="eyebrow">Future Scope</span>
+            <h3>Planned Smart Agriculture Expansion</h3>
+            <ul class="clean-list">
+                <li>Voice assistant support for assisted rural service access</li>
+                <li>Satellite-based farm health and seasonal monitoring integration</li>
+                <li>Advanced ML scoring for disaster risk and claim probability</li>
+                <li>Direct SMS and WhatsApp delivery via external notification APIs</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

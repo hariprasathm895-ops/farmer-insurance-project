@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Farmer Registration - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section page-hero compact-hero">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">Farmer Enrollment</span>
+            <h2 data-en="Farmer Registration System" data-ta="விவசாயி பதிவு அமைப்பு">Farmer Registration System</h2>
+            <p data-en="Submit your profile, Aadhaar, Patta, land details, and bank information for smart verification." data-ta="ஏஐ சரிபார்ப்பிற்காக உங்கள் சுயவிவரம், ஆதார், பட்டா, நில விவரங்கள் மற்றும் வங்கி விவரங்களை சமர்ப்பிக்கவும்.">Submit your profile, Aadhaar, Patta, land details, and bank information for smart verification.</p>
+        </div>
+        <form class="portal-form" method="post" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="age" min="18" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group full-span">
+                    <label>Address</label>
+                    <textarea name="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>District</label>
+                    <input type="text" name="district" required>
+                </div>
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" name="state" value="Tamil Nadu" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" pattern="\d{10}" maxlength="10" required>
+                </div>
+                <div class="form-group">
+                    <label>Aadhaar Number</label>
+                    <input type="text" name="aadhaar" pattern="\d{12}" maxlength="12" required>
+                </div>
+                <div class="form-group">
+                    <label>Patta Number</label>
+                    <input type="text" name="patta_number" required>
+                </div>
+                <div class="form-group">
+                    <label>Farmer Category</label>
+                    <select name="farmer_category" required>
+                        <option value="">Select Category</option>
+                        <option>Small Farmer</option>
+                        <option>Marginal Farmer</option>
+                        <option>Medium Farmer</option>
+                        <option>Large Farmer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Land Area (Acres)</label>
+                    <input type="number" name="land_area" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Crop Type</label>
+                    <select name="crop_type" required>
+                        <option value="">Select Crop</option>
+                        <option>Paddy</option>
+                        <option>Sugarcane</option>
+                        <option>Cotton</option>
+                        <option>Banana</option>
+                        <option>Maize</option>
+                        <option>Groundnut</option>
+                        <option>Tomato</option>
+                        <option>Onion</option>
+                        <option>Coconut</option>
+                        <option>Millet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Season</label>
+                    <select name="season" required>
+                        <option value="">Select Season</option>
+                        <option>Kharif</option>
+                        <option>Rabi</option>
+                        <option>Summer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Annual Income</label>
+                    <input type="number" name="annual_income" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Bank Account Number</label>
+                    <input type="text" name="bank_account" required>
+                </div>
+                <div class="form-group">
+                    <label>IFSC Code</label>
+                    <input type="text" name="ifsc_code" required>
+                </div>
+                <div class="form-group">
+                    <label>Upload Aadhaar Image</label>
+                    <input type="file" name="aadhaar_image" accept=".jpg,.jpeg,.png,.pdf" required>
+                </div>
+                <div class="form-group">
+                    <label>Upload Patta Document</label>
+                    <input type="file" name="patta_document" accept=".jpg,.jpeg,.png,.pdf" required>
+                </div>
+                <div class="form-group">
+                    <label>Upload Land Photo</label>
+                    <input type="file" name="land_image" accept=".jpg,.jpeg,.png,.pdf" required>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit Registration</button>
+                <p class="helper-text">Allowed formats: JPG, PNG, PDF. Maximum upload size: 5 MB per file.</p>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

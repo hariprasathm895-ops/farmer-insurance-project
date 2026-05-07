@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Application History - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">Farmer Records</span>
+            <h2>Application History</h2>
+            <p>Track all subsidy, insurance, loan, and complaint activities from one place.</p>
+        </div>
+
+        <div class="table-card">
+            <div class="table-card-header"><h3>Subsidy Applications</h3></div>
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>Scheme</th><th>Amount</th><th>Status</th><th>AI Suggestions</th></tr></thead>
+                    <tbody>
+                        {% for item in subsidies %}
+                        <tr>
+                            <td>{{ item.scheme_name }}</td>
+                            <td>{{ item.amount|currency }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.recommended_schemes }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4">No subsidy applications yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-card-header"><h3>Insurance Applications</h3></div>
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>Scheme</th><th>Premium</th><th>Risk</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for item in insurance_rows %}
+                        <tr>
+                            <td>{{ item.scheme_name }}</td>
+                            <td>{{ item.premium|currency }}</td>
+                            <td>{{ item.risk_level }}</td>
+                            <td>{{ item.status }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4">No insurance applications yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-card-header"><h3>Loan Applications</h3></div>
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>Loan Type</th><th>Eligibility</th><th>EMI</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for item in loans %}
+                        <tr>
+                            <td>{{ item.loan_type }}</td>
+                            <td>{{ item.eligibility_status }}</td>
+                            <td>{{ item.emi_amount|currency }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <a class="btn btn-ghost" href="{{ url_for('loan_repayment', loan_id=item.id) }}">Repayment</a>
+                                    <a class="btn btn-secondary" href="{{ url_for('loan_receipt', loan_id=item.id) }}">PDF Receipt</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5">No loan applications yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-card-header"><h3>Complaints</h3></div>
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Response</th></tr></thead>
+                    <tbody>
+                        {% for item in complaints %}
+                        <tr>
+                            <td>{{ item.complaint_title }}</td>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.response or 'Awaiting admin response' }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4">No complaints yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

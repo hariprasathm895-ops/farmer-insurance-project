@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}AI Chatbot - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="info-card chatbot-shell">
+            <span class="eyebrow">AI Farmer Assistant</span>
+            <h2>Rule-Based Agriculture AI Chatbot</h2>
+            <p>Ask about subsidy, insurance, loans, status tracking, required documents, or PM-KISAN details.</p>
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-message bot">Welcome to AgriSmart AI. How can I help you today?</div>
+            </div>
+            <form id="chatForm" class="chat-form">
+                <input type="text" id="chatMessage" placeholder="Type your question here..." required>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+            <div class="chat-hints">
+                <span>How to apply subsidy?</span>
+                <span>Required documents?</span>
+                <span>Loan eligibility details?</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    const chatForm = document.getElementById('chatForm');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatMessage = document.getElementById('chatMessage');
+
+    if (chatForm) {
+        chatForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const text = chatMessage.value.trim();
+            if (!text) return;
+
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-message user';
+            userBubble.textContent = text;
+            chatWindow.appendChild(userBubble);
+
+            const response = await fetch('{{ url_for("chatbot_api") }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            const data = await response.json();
+            const botBubble = document.createElement('div');
+            botBubble.className = 'chat-message bot';
+            botBubble.textContent = data.reply;
+            chatWindow.appendChild(botBubble);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+            chatMessage.value = '';
+        });
+    }
+</script>
+{% endblock %}

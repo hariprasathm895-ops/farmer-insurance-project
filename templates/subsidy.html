@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Apply Subsidy - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container two-column">
+        <div class="info-card">
+            <span class="eyebrow">Smart Subsidy Module</span>
+            <h2>Subsidy Application</h2>
+            <form class="portal-form" method="post">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Scheme Name</label>
+                        <input type="text" name="scheme_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Crop Type</label>
+                        <input type="text" name="crop_type" value="{{ farmer.crop_type }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Land Area</label>
+                        <input type="number" step="0.01" name="land_area" value="{{ farmer.land_area }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Farmer Category</label>
+                        <input type="text" name="farmer_category" value="{{ farmer.farmer_category }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" name="district" value="{{ farmer.district }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Requested Amount</label>
+                        <input type="number" step="0.01" name="amount" required>
+                    </div>
+                    <div class="form-group full-span">
+                        <label>Additional Details</label>
+                        <textarea name="details" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Subsidy Request</button>
+            </form>
+        </div>
+        <div class="info-card">
+            <h3>AI Recommended Schemes</h3>
+            <ul class="clean-list">
+                {% for item in suggestions %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

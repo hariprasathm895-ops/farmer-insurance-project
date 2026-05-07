@@ -1,0 +1,31 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <path d="M0 650C132 606 253 573 413 590C593 609 713 738 865 742C1026 746 1119 622 1272 608C1399 596 1495 625 1600 670V900H0V650Z" fill="#D6EFC8"/>
+  <path d="M0 708C161 671 319 645 486 683C647 721 787 810 938 798C1091 786 1192 667 1348 652C1449 643 1530 664 1600 699V900H0V708Z" fill="#9DD07A"/>
+  <path d="M0 776C143 730 307 726 472 760C638 794 760 860 922 848C1110 834 1214 732 1370 723C1456 718 1539 732 1600 754V900H0V776Z" fill="#4EA465"/>
+  <path d="M1020 325C1020 243.262 1086.26 177 1168 177H1264C1345.74 177 1412 243.262 1412 325V560H1020V325Z" fill="#F5F6F7"/>
+  <rect x="1076" y="244" width="70" height="70" rx="12" fill="#8FC4F2"/>
+  <rect x="1164" y="244" width="70" height="70" rx="12" fill="#8FC4F2"/>
+  <rect x="1252" y="244" width="70" height="70" rx="12" fill="#8FC4F2"/>
+  <rect x="1112" y="344" width="210" height="216" rx="14" fill="#E8ECEF"/>
+  <path d="M930 560H1495V597H930V560Z" fill="#A4B7C6"/>
+  <path d="M315 469C333 429 368 404 413 404C482 404 532 460 532 526H315V469Z" fill="#F9B847"/>
+  <rect x="381" y="470" width="82" height="56" fill="#2876B8"/>
+  <path d="M228 545H742V573H228V545Z" fill="#7B5A35"/>
+  <path d="M180 545H799L726 607H258L180 545Z" fill="#976E42"/>
+  <path d="M193 628H791V662H193V628Z" fill="#8A6238"/>
+  <circle cx="274" cy="665" r="42" fill="#2F3A4A"/>
+  <circle cx="685" cy="665" r="42" fill="#2F3A4A"/>
+  <path d="M110 255C110 211.922 144.922 177 188 177C231.078 177 266 211.922 266 255V365H110V255Z" fill="#6AC17A"/>
+  <rect x="180" y="363" width="18" height="88" fill="#7B5A35"/>
+  <path d="M204 363C204 325.444 234.444 295 272 295C309.556 295 340 325.444 340 363H204Z" fill="#7BD889"/>
+  <rect x="264" y="361" width="16" height="73" fill="#7B5A35"/>
+  <path d="M1379 197L1409 125L1436 197H1379Z" fill="#F7A93A"/>
+  <circle cx="1409" cy="125" r="48" fill="#FDD56A"/>
+  <defs>
+    <linearGradient id="bg" x1="800" y1="0" x2="800" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D5F0FF"/>
+      <stop offset="1" stop-color="#F5FBFF"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Apply Loan - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container two-column">
+        <div class="info-card">
+            <span class="eyebrow">Smart Agriculture Loan Module</span>
+            <h2>Loan Application</h2>
+            <form class="portal-form" method="post">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Farmer ID</label>
+                        <input type="text" value="{{ farmer.farmer_id }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Crop Type</label>
+                        <input type="text" name="crop_type" value="{{ farmer.crop_type }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Land Area (Acres)</label>
+                        <input type="number" step="0.01" name="land_area" value="{{ farmer.land_area }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Annual Income</label>
+                        <input type="number" step="0.01" name="annual_income" value="{{ farmer.annual_income }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Loan Type</label>
+                        <select name="loan_type" required>
+                            <option>Crop Loan</option>
+                            <option>Tractor Loan</option>
+                            <option>Irrigation Loan</option>
+                            <option>Equipment Loan</option>
+                            <option>Dairy Farm Loan</option>
+                            <option>Poultry Farm Loan</option>
+                            <option>Organic Farming Loan</option>
+                            <option>Greenhouse Loan</option>
+                            <option>Solar Pump Loan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Requested Loan Amount</label>
+                        <input type="number" step="0.01" name="requested_amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bank Account Number</label>
+                        <input type="text" name="bank_account" value="{{ farmer.bank_account }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>IFSC Code</label>
+                        <input type="text" name="ifsc_code" value="{{ farmer.ifsc_code }}" required>
+                    </div>
+                    <div class="form-group full-span">
+                        <label>Purpose of Loan</label>
+                        <textarea name="purpose" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group full-span">
+                        <label>Existing Loan Details</label>
+                        <textarea name="existing_loan_details" rows="3"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Loan Request</button>
+            </form>
+        </div>
+        <div class="info-card">
+            <h3>AI Loan Preview</h3>
+            <p><strong>Suggested Scheme:</strong> {{ preview.scheme_name }}</p>
+            <p><strong>Eligibility:</strong> {{ preview.eligibility_status }}</p>
+            <p><strong>Interest Rate:</strong> {{ preview.interest_rate }}%</p>
+            <p><strong>Repayment Period:</strong> {{ preview.repayment_period }} months</p>
+            <p><strong>Approval Probability:</strong> {{ preview.approval_probability }}%</p>
+            <p><strong>EMI Estimate:</strong> {{ preview.emi_amount|currency }}</p>
+            <p><strong>Risk Level:</strong> {{ preview.risk_level }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

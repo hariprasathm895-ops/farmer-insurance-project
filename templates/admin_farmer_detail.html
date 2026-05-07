@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}Farmer Details - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="page-header-card">
+            <div>
+                <span class="eyebrow">Farmer Profile</span>
+                <h2>{{ farmer.name }}</h2>
+                <p>Farmer ID: {{ farmer.farmer_id }} | District: {{ farmer.district }}</p>
+            </div>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+
+        <div class="two-column">
+            <div class="info-card">
+                <h3>Registration Information</h3>
+                <div class="detail-list">
+                    <p><strong>Phone:</strong> {{ farmer.phone }}</p>
+                    <p><strong>Aadhaar:</strong> {{ farmer.aadhaar }}</p>
+                    <p><strong>Patta Number:</strong> {{ farmer.patta_number }}</p>
+                    <p><strong>Category:</strong> {{ farmer.farmer_category }}</p>
+                    <p><strong>Land Area:</strong> {{ farmer.land_area }} acres</p>
+                    <p><strong>Crop Type:</strong> {{ farmer.crop_type }}</p>
+                    <p><strong>Season:</strong> {{ farmer.season }}</p>
+                    <p><strong>Annual Income:</strong> {{ farmer.annual_income|currency }}</p>
+                    <p><strong>Bank Account:</strong> {{ farmer.bank_account }}</p>
+                    <p><strong>IFSC:</strong> {{ farmer.ifsc_code }}</p>
+                    <p><strong>Status:</strong> {{ farmer.application_status }}</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <h3>AI Verification Result</h3>
+                <div class="detail-list">
+                    <p><strong>Aadhaar Verification:</strong> {{ farmer.verification_status }}</p>
+                    <p><strong>Patta Verification:</strong> {{ farmer.patta_verification }}</p>
+                    <p><strong>Land Ownership:</strong> {{ farmer.land_ownership_status }}</p>
+                    <p><strong>OCR Aadhaar Name:</strong> {{ farmer.ocr_aadhaar_name or 'Not extracted' }}</p>
+                    <p><strong>OCR Aadhaar Number:</strong> {{ farmer.ocr_aadhaar_number or 'Not extracted' }}</p>
+                    <p><strong>OCR Patta Name:</strong> {{ farmer.ocr_patta_name or 'Not extracted' }}</p>
+                    <p><strong>Land Details:</strong> {{ farmer.ocr_land_details or 'Not extracted' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="document-grid">
+            <div class="info-card">
+                <h3>Aadhaar Document</h3>
+                <a class="btn btn-primary" target="_blank" href="{{ url_for('uploaded_document', relative_path=farmer.aadhaar_image) }}">View Aadhaar</a>
+            </div>
+            <div class="info-card">
+                <h3>Patta Document</h3>
+                <a class="btn btn-primary" target="_blank" href="{{ url_for('uploaded_document', relative_path=farmer.patta_document) }}">View Patta</a>
+            </div>
+            <div class="info-card">
+                <h3>Land Photo</h3>
+                <a class="btn btn-primary" target="_blank" href="{{ url_for('uploaded_document', relative_path=farmer.land_image) }}">View Land Photo</a>
+            </div>
+            <div class="info-card">
+                <h3>Farmer QR ID</h3>
+                <img class="qr-preview" src="{{ url_for('static', filename=farmer.qr_code_path) }}" alt="Farmer QR code">
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3>OCR Raw Text</h3>
+            <pre class="ocr-box">{{ farmer.ocr_raw_text }}</pre>
+        </div>
+
+        <div class="two-column">
+            <div class="table-card">
+                <div class="table-card-header"><h3>Subsidy History</h3></div>
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead><tr><th>Scheme</th><th>Amount</th><th>Status</th></tr></thead>
+                        <tbody>
+                            {% for item in subsidies %}
+                            <tr><td>{{ item.scheme_name }}</td><td>{{ item.amount|currency }}</td><td>{{ item.status }}</td></tr>
+                            {% else %}
+                            <tr><td colspan="3">No subsidy records.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-card-header"><h3>Insurance History</h3></div>
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead><tr><th>Scheme</th><th>Premium</th><th>Status</th></tr></thead>
+                        <tbody>
+                            {% for item in insurance_rows %}
+                            <tr><td>{{ item.scheme_name }}</td><td>{{ item.premium|currency }}</td><td>{{ item.status }}</td></tr>
+                            {% else %}
+                            <tr><td colspan="3">No insurance records.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="table-card">
+                <div class="table-card-header"><h3>Loan History</h3></div>
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead><tr><th>Loan Type</th><th>Eligibility</th><th>Status</th></tr></thead>
+                        <tbody>
+                            {% for item in loans %}
+                            <tr><td>{{ item.loan_type }}</td><td>{{ item.eligibility_status }}</td><td>{{ item.status }}</td></tr>
+                            {% else %}
+                            <tr><td colspan="3">No loan records.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-card-header"><h3>Complaint History</h3></div>
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead><tr><th>Title</th><th>Category</th><th>Status</th></tr></thead>
+                        <tbody>
+                            {% for item in complaints %}
+                            <tr><td>{{ item.complaint_title }}</td><td>{{ item.category }}</td><td>{{ item.status }}</td></tr>
+                            {% else %}
+                            <tr><td colspan="3">No complaints records.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

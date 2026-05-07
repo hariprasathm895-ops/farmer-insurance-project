@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Loan Repayment - AgriSmart AI{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="info-card">
+            <span class="eyebrow">Repayment Tracker</span>
+            <h2>{{ loan.loan_type }} Repayment</h2>
+            <p><strong>Requested Amount:</strong> {{ loan.requested_amount|currency }}</p>
+            <p><strong>Amount Paid:</strong> {{ loan.amount_paid|currency }}</p>
+            <p><strong>Balance:</strong> {{ balance|currency }}</p>
+            <p><strong>EMI:</strong> {{ loan.emi_amount|currency }}</p>
+            <p><strong>Status:</strong> {{ loan.repayment_status }}</p>
+
+            <form class="portal-form compact-form" method="post">
+                <div class="form-group">
+                    <label>Payment Amount</label>
+                    <input type="number" step="0.01" name="payment_amount" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Record Payment</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

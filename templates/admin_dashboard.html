@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - AgriSmart AI{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+{% block content %}
+<section class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-card">
+            <h3>Admin Console</h3>
+            <a href="#overview">Overview</a>
+            <a href="#farmers">Farmers</a>
+            <a href="#services">Service Applications</a>
+            <a href="#complaints">Complaints</a>
+            <a href="{{ url_for('admin_logout') }}">Logout</a>
+        </div>
+    </aside>
+    <div class="dashboard-main">
+        <section class="section">
+            <div class="container">
+                <div class="section-heading reveal" id="overview">
+                    <span class="eyebrow">Administration</span>
+                    <h2>Professional Admin Dashboard</h2>
+                    <p>Verify farmers, review AI findings, and manage subsidy, insurance, loan, and complaint workflows.</p>
+                </div>
+                <div class="dashboard-card-grid">
+                    <div class="dashboard-stat-card"><span>Total Farmers</span><strong>{{ counts.total_farmers }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Pending Applications</span><strong>{{ counts.pending }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Approved Farmers</span><strong>{{ counts.approved }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Rejected Applications</span><strong>{{ counts.rejected }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Subsidy Applications</span><strong>{{ counts.subsidy }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Insurance Applications</span><strong>{{ counts.insurance }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Loan Applications</span><strong>{{ counts.loan }}</strong></div>
+                    <div class="dashboard-stat-card"><span>Complaints Count</span><strong>{{ counts.complaints }}</strong></div>
+                </div>
+                <div class="two-column chart-layout">
+                    <div class="info-card">
+                        <h3>Application Status Analytics</h3>
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                    <div class="info-card">
+                        <h3>Crop-wise Registrations</h3>
+                        <canvas id="cropChart"></canvas>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h3>Service Distribution</h3>
+                    <canvas id="serviceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="farmers">
+            <div class="container">
+                <div class="table-card">
+                    <div class="table-card-header">
+                        <h3>Farmer Applications</h3>
+                    </div>
+                    <div class="table-scroll">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Farmer ID</th>
+                                    <th>Name</th>
+                                    <th>District</th>
+                                    <th>Verification</th>
+                                    <th>Patta</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for farmer in farmers %}
+                                <tr>
+                                    <td>{{ farmer.farmer_id }}</td>
+                                    <td>{{ farmer.name }}</td>
+                                    <td>{{ farmer.district }}</td>
+                                    <td>{{ farmer.verification_status }}</td>
+                                    <td>{{ farmer.patta_verification }}</td>
+                                    <td><span class="badge badge-{{ farmer.application_status|lower }}">{{ farmer.application_status }}</span></td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <a class="btn btn-ghost" href="{{ url_for('admin_farmer_detail', farmer_db_id=farmer.id) }}">View</a>
+                                            <form method="post" action="{{ url_for('approve_farmer', farmer_db_id=farmer.id) }}">
+                                                <button type="submit" class="btn btn-success">Approve</button>
+                                            </form>
+                                            <form method="post" action="{{ url_for('reject_farmer', farmer_db_id=farmer.id) }}">
+                                                <button type="submit" class="btn btn-warning">Reject</button>
+                                            </form>
+                                            <form method="post" action="{{ url_for('verify_patta_manual', farmer_db_id=farmer.id) }}">
+                                                <button type="submit" class="btn btn-secondary">Verify Patta</button>
+                                            </form>
+                                            <form method="post" action="{{ url_for('delete_farmer', farmer_db_id=farmer.id) }}">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="7">No farmer applications available.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="services">
+            <div class="container service-grid">
+                <div class="table-card">
+                    <div class="table-card-header"><h3>Subsidy Applications</h3></div>
+                    {% for item in subsidies %}
+                    <div class="admin-list-card">
+                        <p><strong>{{ item.farmer_id }}</strong> - {{ item.scheme_name }}</p>
+                        <p>{{ item.crop_type }} | {{ item.amount|currency }}</p>
+                        <form method="post" action="{{ url_for('update_subsidy_status', record_id=item.id) }}" class="inline-admin-form">
+                            <select name="status">
+                                <option {% if item.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option {% if item.status == 'Approved' %}selected{% endif %}>Approved</option>
+                                <option {% if item.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <p class="empty-note">No subsidy applications yet.</p>
+                    {% endfor %}
+                </div>
+                <div class="table-card">
+                    <div class="table-card-header"><h3>Insurance Applications</h3></div>
+                    {% for item in insurance_rows %}
+                    <div class="admin-list-card">
+                        <p><strong>{{ item.farmer_id }}</strong> - {{ item.scheme_name }}</p>
+                        <p>{{ item.crop_type }} | Premium {{ item.premium|currency }} | {{ item.risk_level }}</p>
+                        <form method="post" action="{{ url_for('update_insurance_status', record_id=item.id) }}" class="inline-admin-form">
+                            <select name="status">
+                                <option {% if item.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option {% if item.status == 'Approved' %}selected{% endif %}>Approved</option>
+                                <option {% if item.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <p class="empty-note">No insurance applications yet.</p>
+                    {% endfor %}
+                </div>
+                <div class="table-card">
+                    <div class="table-card-header"><h3>Loan Applications</h3></div>
+                    {% for item in loans %}
+                    <div class="admin-list-card">
+                        <p><strong>{{ item.farmer_id }}</strong> - {{ item.loan_type }}</p>
+                        <p>{{ item.scheme_name }} | EMI {{ item.emi_amount|currency }} | {{ item.eligibility_status }}</p>
+                        <form method="post" action="{{ url_for('update_loan_status', record_id=item.id) }}" class="inline-admin-form">
+                            <select name="status">
+                                <option {% if item.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option {% if item.status == 'Approved' %}selected{% endif %}>Approved</option>
+                                <option {% if item.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <p class="empty-note">No loan applications yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="complaints">
+            <div class="container">
+                <div class="table-card">
+                    <div class="table-card-header">
+                        <h3>Complaint Management</h3>
+                    </div>
+                    <div class="complaint-grid">
+                        {% for item in complaints %}
+                        <div class="admin-list-card">
+                            <p><strong>{{ item.farmer_id }}</strong> - {{ item.complaint_title }}</p>
+                            <p>{{ item.category }} | {{ item.status }}</p>
+                            <p>{{ item.complaint_description }}</p>
+                            <form method="post" action="{{ url_for('respond_complaint', record_id=item.id) }}">
+                                <textarea name="response" rows="3" placeholder="Admin response">{{ item.response }}</textarea>
+                                <div class="inline-admin-form">
+                                    <select name="status">
+                                        <option {% if item.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                        <option {% if item.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                        <option {% if item.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Update Complaint</button>
+                                </div>
+                            </form>
+                        </div>
+                        {% else %}
+                        <p class="empty-note">No complaints submitted yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    window.agriAdminCharts = {{ analytics|tojson }};
+</script>
+<script>
+    const adminData = window.agriAdminCharts;
+
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: adminData.status_labels,
+            datasets: [{
+                data: adminData.status_counts,
+                backgroundColor: ['#12955a', '#d9534f', '#f1b73c']
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('cropChart'), {
+        type: 'bar',
+        data: {
+            labels: adminData.crop_labels,
+            datasets: [{
+                label: 'Registrations',
+                data: adminData.crop_counts,
+                backgroundColor: '#0d6efd'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    new Chart(document.getElementById('serviceChart'), {
+        type: 'line',
+        data: {
+            labels: adminData.service_labels,
+            datasets: [{
+                label: 'Total Records',
+                data: adminData.service_counts,
+                borderColor: '#198754',
+                backgroundColor: 'rgba(25, 135, 84, 0.15)',
+                tension: 0.35,
+                fill: true
+            }]
+        }
+    });
+</script>
+{% endblock %}
