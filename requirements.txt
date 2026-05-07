@@ -6,3 +6,4 @@ opencv-python
 requests
 reportlab
 qrcode
+gunicorn
